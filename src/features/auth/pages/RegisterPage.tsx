@@ -14,14 +14,28 @@ import { RegisterFormInnner } from "../components/RegisterFormInner";
 import { Separator } from "~/components/ui/separator";
 import { Button } from "~/components/ui/button";
 import Link from "next/link";
+import { api } from "~/utils/api";
+import { toast } from "react-toastify";
 
 const RegisterPage = () => {
   const form = useForm<RegisterFormSchema>({
     resolver: zodResolver(registerFormSchema),
   });
 
+  const { mutate: registerUser, isPending: registerUserIsPending } =
+    api.auth.register.useMutation({
+      onSuccess: () => {
+        toast("Berhasil buat akun!");
+        form.setValue("email", "");
+        form.setValue("password", "");
+      },
+      onError: () => {
+        toast.error("Gagal buat akun, coba beberapa saat lagi");
+      },
+    });
+
   const handleSubmit = (data: RegisterFormSchema) => {
-    alert("hello");
+    registerUser(data);
   };
 
   return (
@@ -36,7 +50,11 @@ const RegisterPage = () => {
           </CardHeader>
           <CardContent>
             <Form {...form}>
-              <RegisterFormInnner onRegisterSubmit={handleSubmit} />
+              <RegisterFormInnner
+                onRegisterSubmit={handleSubmit}
+                isLoading={registerUserIsPending}
+                showPassword
+              />
             </Form>
           </CardContent>
           <CardFooter className="flex flex-col gap-4">

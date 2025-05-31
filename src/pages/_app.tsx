@@ -5,6 +5,7 @@ import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
 import { ThemeProvider } from "~/components/theme-provider";
+import { ToastContainer } from 'react-toastify';
 
 const geist = Geist({
   subsets: ["latin"],
@@ -20,6 +21,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
     >
       <div className={geist.className}>
         <Component {...pageProps} />
+        <ToastContainer />
       </div>
     </ThemeProvider>
   );
