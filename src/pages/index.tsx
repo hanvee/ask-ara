@@ -1,5 +1,5 @@
 import { Button } from "~/components/ui/button";
-import { ThemeToggle } from "~/components/theme-toggle";
+import { ModeToggle } from "~/components/layout/ModeToggle";
 
 import { api } from "~/utils/api";
 
@@ -11,7 +11,7 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center justify-center">
         <h1 className="text-2xl">Hello World</h1>
         <Button>Sentuh aku</Button>
-        <ThemeToggle />
+        <ModeToggle />
       </main>
     </>
   );
